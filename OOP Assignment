@@ -1,0 +1,95 @@
+
+class Order { // I decided to create a order promt because so many people shop online.
+        constructor(name){
+            this.name = name;
+        }
+        describe(){
+            return `${this.name}`;
+        }   
+    }
+
+
+    class Menu{ // sets the parameters for the Menu.
+    constructor(){
+        this.orders = [];
+        this.selectedOrder = null;
+    }
+
+    start(){  //creating the prompt window and it's components. 
+        let selection = this.showMainMenuOptions();
+        while (selection != 0){
+            switch (selection){
+                case '1':
+                    this.createOrder();
+                    break;
+                case '2':
+                    this.viewOrder();
+                    break;
+                case '3':
+                    this.deleteOrder();
+                    break;
+                case '4':
+                    this.displayOrder();
+                    break;
+                default:
+                    selection = 0;    
+            }
+            selection = this.showMainMenuOptions();
+        }
+
+        alert('Goodbye!');
+    }
+
+
+    showMainMenuOptions(){ // the prompts layout/appearance. 
+        return prompt(`
+        0) exit
+        1) create new order
+        2) view order
+        3) delete order
+        4) display all orders
+        `);
+    }
+
+
+        displayOrder(){ // allows you to display all orders entered. 
+        let orderString = '';
+        for (let i =0; i < this.orders.length; i++){
+            orderString += i + ')' + this.orders[i].name + '\n';
+        }
+        alert(orderString);
+    }
+
+
+        createOrder(){ // allows you to create an order.
+        let name = prompt('Enter name for new Order:');
+        this.orders.push(new Order(name));
+    }
+
+        viewOrder(){ // allows you to view orders with additional items in the order (However, I didn't add additional items.)
+        let index = prompt('enter the index of the order you wish to view:');
+        if (index > -1 && index < this.orders.length){
+            this.selectedOrder = this.orders[index];
+            let description = 'Order Name:' + this.selectedOrder.name + '\n';
+
+            }
+            
+            let selection = this.showOrderMenuOptions(description);
+            switch (selection){
+                case '1':
+                    this.createOrder();
+                    break;
+                case '2':
+                    this.deleteOrder();
+            }
+        }
+            deleteOrder(){ // allows you to delete any order you wish to delete in the array. 
+        let index = prompt('Enter index of the Order you wish to delete:');
+        if (index > -1 && index < this.orders.length){
+            this.orders.splice(index, 1);
+        }
+    } 
+        
+} 
+        let menu = new Menu(); // calls the function into being. 
+        menu.start();
